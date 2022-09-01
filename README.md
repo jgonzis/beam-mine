@@ -179,8 +179,8 @@ This enables the Beam pool wallet to perpetually listen at the Beam node. Now le
 
 	mysql -u root
 
-	CREATE USER 'newMYSQLuser'@'localhost' IDENTIFIED BY 'MYSQLpassword';
-
+	CREATE USER 'newMYSQLuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'MYSQLpassword';
+	
 	GRANT ALL PRIVILEGES ON *.* TO 'newMYSQLuser'@'localhost';
 
 	FLUSH PRIVILEGES;
@@ -189,6 +189,9 @@ And confirm your new user has privileges
 	SHOW GRANTS FOR 'database_user'@'localhost';
 Now in your MYSQL third party software (sequelpro or similar) create your tables within a new database ‘beam’
 
+	CREATE DATABASE beam
+	USE beam
+	
 	CREATE TABLE `accounts` (
 	  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 	  `coinid` int(11) DEFAULT NULL,
@@ -314,7 +317,7 @@ Amend the password to match your owner key password
 	pass=yourpassword
 node address to listen the api server on
 
-	node_addr=127.0.0.1:101274
+	node_addr=127.0.0.1:10127
 port to start server on
 
 	port=11111
@@ -335,7 +338,7 @@ Peer address to point the local api server to
 
 peer address
 
-	peer=YOUR SERVER IP:PORT
+	peer=127.0.0.1:10127
 port to start the local api server on
 
 	api_port=666
@@ -361,7 +364,7 @@ Run the wallet API (and enable offline payments):
 	screen -dmS API ./wallet-api --enable_lelantus
 Set up your wallet listener from within the beam-node folder:
 
-	screen -dmS LISTEN ./beam-wallet listen -n YOURSERVERIP:10127
+	screen -dmS LISTEN ./beam-wallet listen -n 127.0.0.1:10127
 RUN THE POOL
 
 From within the beam-pool folder, run the command as follows;
